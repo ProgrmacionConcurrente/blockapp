@@ -55,4 +55,53 @@ public class TransactionController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/searchByUserId/{userId}")
+    public ResponseEntity<List<Transaction>> findByUserId(@PathVariable("userId") Long userId)
+    {
+        try {
+            List<Transaction> transactionsBySender = transactionService.findBySenderId(userId);
+            List<Transaction> transactionsByReceiver = transactionService.findByReceiverId(userId);
+            List<Transaction> transactionsByUser = null;
+            transactionsByUser.addAll(transactionsBySender);
+            transactionsByUser.addAll(transactionsByReceiver);
+            System.out.println("Transactions by User"+ transactionsByUser);
+            if(transactionsByUser.size()>0)
+                return new ResponseEntity<>(transactionsByUser, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/searchBySenderId/{senderId}")
+    public ResponseEntity<List<Transaction>> findBySenderId(@PathVariable("senderId") Long senderId)
+    {
+        try {
+            List<Transaction> transactionsBySender = transactionService.findBySenderId(senderId);
+            System.out.println("Transactions by Sender"+ transactionsBySender);
+            if(transactionsBySender.size()>0)
+                return new ResponseEntity<>(transactionsBySender, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/searchByReceiverId/{receiverId}")
+    public ResponseEntity<List<Transaction>> findByReceiverId(@PathVariable("receiverId") Long receiverId)
+    {
+        try {
+            List<Transaction> transactionsByReceiver = transactionService.findByReceiverId(receiverId);
+            System.out.println("Transactions by Receiver"+ transactionsByReceiver);
+            if(transactionsByReceiver.size()>0)
+                return new ResponseEntity<>(transactionsByReceiver, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

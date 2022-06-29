@@ -36,4 +36,14 @@ public class TransactionServiceImpl implements TransactionService {
     public void delete(Long id) throws Exception {
         transactionRepository.deleteById(id);
     }
+
+    @Override
+    public List<Transaction> findBySenderId(Long senderId) throws Exception {
+        return transactionRepository.findBySenderId(senderId);
+    }
+
+    @Override
+    public List<Transaction> findByReceiverId(Long receiverId) throws Exception {
+        return transactionRepository.findByReceiverId(receiverId);
+    }
 }

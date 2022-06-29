@@ -2,6 +2,8 @@ package com.blockapp.controller;
 
 import com.blockapp.entity.User;
 import com.blockapp.service.UserService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,10 @@ public class UserController {
     private UserService userService;
     
     @GetMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
+            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+    })
     public ResponseEntity<List<User>> findAll() {
         try {
             List<User> users = userService.getAll();
@@ -33,6 +39,10 @@ public class UserController {
     }
 
     @GetMapping({"/{userId}"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
+            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+    })
     public ResponseEntity<User> findById(@PathVariable("userId") Long userId) {
         try {
             Optional<User> user = userService.getById(userId);
@@ -46,6 +56,10 @@ public class UserController {
     }
 
     @PostMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
+            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+    })
     public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
         try {
             User userNew = userService.save(user);
@@ -57,6 +71,10 @@ public class UserController {
     }
 
     @PutMapping({"/{userId}"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
+            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+    })
     public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId, @Valid @RequestBody User user) {
         try {
             Optional<User> userUp = userService.getById(userId);
@@ -72,6 +90,10 @@ public class UserController {
     }
 
     @DeleteMapping({"/{userId}"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
+            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+    })
     public ResponseEntity<User> deleteUser(@PathVariable("userId") Long userId) {
         try {
             Optional<User> userDelete = userService.getById(userId);

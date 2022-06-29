@@ -5,25 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="transaction")
+@Table(name="transactions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction {
+public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(name = "dateCreated", updatable = false)
     Timestamp dateCreated;
 
     @ManyToOne(fetch = FetchType.LAZY)
