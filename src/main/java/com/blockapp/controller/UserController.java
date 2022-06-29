@@ -22,8 +22,8 @@ public class UserController {
     
     @GetMapping
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
-            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuarios encontrados"),
+            @ApiResponse(responseCode = "404", description ="Usuarios no encontrados")
     })
     public ResponseEntity<List<User>> findAll() {
         try {
@@ -40,8 +40,8 @@ public class UserController {
 
     @GetMapping({"/{userId}"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
-            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
+            @ApiResponse(responseCode = "404", description ="Usuario no encontrado")
     })
     public ResponseEntity<User> findById(@PathVariable("userId") Long userId) {
         try {
@@ -57,8 +57,8 @@ public class UserController {
 
     @PostMapping
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
-            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario creado"),
+            @ApiResponse(responseCode = "404", description ="Usuario no creado")
     })
     public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
         try {
@@ -72,8 +72,8 @@ public class UserController {
 
     @PutMapping({"/{userId}"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
-            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario actualizado"),
+            @ApiResponse(responseCode = "404", description ="Usuario no actualizado")
     })
     public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId, @Valid @RequestBody User user) {
         try {
@@ -91,8 +91,8 @@ public class UserController {
 
     @DeleteMapping({"/{userId}"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Trabajador encontrado"),
-            @ApiResponse(responseCode = "404", description ="Trabajador no encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario eliminado"),
+            @ApiResponse(responseCode = "404", description ="Usuario no eliminado")
     })
     public ResponseEntity<User> deleteUser(@PathVariable("userId") Long userId) {
         try {

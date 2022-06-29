@@ -2,6 +2,8 @@ package com.blockapp.controller;
 
 import com.blockapp.entity.Transaction;
 import com.blockapp.service.TransactionService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,10 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transacciones encontradas"),
+            @ApiResponse(responseCode = "404", description ="Transacciones no encontradas")
+    })
     public ResponseEntity<List<Transaction>> findAll() {
         try {
             List<Transaction> transactions = transactionService.getAll();
@@ -33,6 +39,10 @@ public class TransactionController {
     }
 
     @GetMapping({"/{transactionId}"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transaccion encontrada"),
+            @ApiResponse(responseCode = "404", description ="Transaccion no encontrada")
+    })
     public ResponseEntity<Transaction> findById(@PathVariable("transactionId") Long transactionId) {
         try {
             Optional<Transaction> transaction = transactionService.getById(transactionId);
@@ -46,6 +56,10 @@ public class TransactionController {
     }
 
     @PostMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transaccion creada"),
+            @ApiResponse(responseCode = "404", description ="Transaccion no creada")
+    })
     public ResponseEntity<Transaction> saveTransaction(@Valid @RequestBody Transaction transaction) {
         try {
             Transaction transactionNew = transactionService.save(transaction);
@@ -57,14 +71,14 @@ public class TransactionController {
     }
 
     @GetMapping("/searchByUserId/{userId}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transacciones encontradas"),
+            @ApiResponse(responseCode = "404", description ="Transacciones no encontradas")
+    })
     public ResponseEntity<List<Transaction>> findByUserId(@PathVariable("userId") Long userId)
     {
         try {
-            List<Transaction> transactionsBySender = transactionService.findBySenderId(userId);
-            List<Transaction> transactionsByReceiver = transactionService.findByReceiverId(userId);
-            List<Transaction> transactionsByUser = null;
-            transactionsByUser.addAll(transactionsBySender);
-            transactionsByUser.addAll(transactionsByReceiver);
+            List<Transaction> transactionsByUser = transactionService.findByUserId(userId);
             System.out.println("Transactions by User"+ transactionsByUser);
             if(transactionsByUser.size()>0)
                 return new ResponseEntity<>(transactionsByUser, HttpStatus.OK);
@@ -76,6 +90,10 @@ public class TransactionController {
     }
     
     @GetMapping("/searchBySenderId/{senderId}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transacciones encontradas"),
+            @ApiResponse(responseCode = "404", description ="Transacciones no encontradas")
+    })
     public ResponseEntity<List<Transaction>> findBySenderId(@PathVariable("senderId") Long senderId)
     {
         try {
@@ -91,6 +109,10 @@ public class TransactionController {
     }
 
     @GetMapping("/searchByReceiverId/{receiverId}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transacciones encontradas"),
+            @ApiResponse(responseCode = "404", description ="Transacciones no encontradas")
+    })
     public ResponseEntity<List<Transaction>> findByReceiverId(@PathVariable("receiverId") Long receiverId)
     {
         try {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> findByReceiverId(Long receiverId) throws Exception {
         return transactionRepository.findByReceiverId(receiverId);
+    }
+
+    @Override
+    public List<Transaction> findByUserId(Long userId) throws Exception {
+        List<Transaction> transactions = new ArrayList<>();
+        List<Transaction> transactionsLikeSender = transactionRepository.findBySenderId(userId);
+        List<Transaction> transactionsLikeReceiver = transactionRepository.findByReceiverId(userId);
+        transactions.addAll(transactionsLikeSender);
+        transactions.addAll(transactionsLikeReceiver);
+        return transactions;
     }
 }
