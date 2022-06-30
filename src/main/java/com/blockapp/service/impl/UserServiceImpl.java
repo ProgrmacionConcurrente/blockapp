@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void delete(Long id) throws Exception {
         userRepository.deleteById(id);
